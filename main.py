@@ -1,1 +1,62 @@
 
+import random
+
+total_seats = 10
+available_seats = list(range(1, total_seats + 1))
+bookings = {}
+
+def check_availability():
+    print("Available seats:", available_seats)
+
+def book_ticket():
+    if not available_seats:
+        print("No seats available!")
+        return
+    
+    name = input("Enter name: ")
+    age = input("Enter age: ")
+    
+    seat = available_seats.pop(0)
+    booking_id = random.randint(1000, 9999)
+    
+    bookings[booking_id] = {
+        "name": name,
+        "age": age,
+        "seat": seat
+    }
+    
+    print(f"Booked! ID: {booking_id}, Seat: {seat}")
+
+def view_ticket():
+    bid = int(input("Enter booking ID: "))
+    
+    if bid in bookings:
+        print(bookings[bid])
+    else:
+        print("Not found")
+
+def cancel_ticket():
+    bid = int(input("Enter booking ID: "))
+    
+    if bid in bookings:
+        seat = bookings[bid]["seat"]
+        available_seats.append(seat)
+        del bookings[bid]
+        print("Cancelled")
+    else:
+        print("Not found")
+
+while True:
+    print("\n1.Check 2.Book 3.View 4.Cancel 5.Exit")
+    choice = input("Choice: ")
+    
+    if choice == "1":
+        check_availability()
+    elif choice == "2":
+        book_ticket()
+    elif choice == "3":
+        view_ticket()
+    elif choice == "4":
+        cancel_ticket()
+    elif choice == "5":
+        break
